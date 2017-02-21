@@ -12,7 +12,7 @@ package com.myclasses;
 public class testConnection {
     
         public static void main(String [] args){
-            ConnectionManager.getConnection();
+            new ConnectionManager().getConnection();
         }
     
 }

@@ -11,6 +11,14 @@ import com.myclasses.UserBean;
 import com.myclasses.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,7 +51,13 @@ public class RegisterServlet extends HttpServlet {
         user.setLastname(request.getParameter("lastname"));
         user.setPassword(request.getParameter("password"));
         user.setEmail(request.getParameter("email"));
-        boolean success = RegisterDAO.createUser(user);
+        
+        LocalDate localDate;
+        
+             localDate = LocalDate.parse(request.getParameter("bdate"));
+        
+        user.setBdate(localDate);
+        boolean success = new RegisterDAO().createUser(user);
         
         if(success){
             System.out.println("In Servlet - user inserted, redirecting to login!");

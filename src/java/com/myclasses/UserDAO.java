@@ -18,8 +18,7 @@ import java.util.logging.Logger;
  */
 public class UserDAO {
     
-    static Connection conn;
-    static ResultSet rs;
+    
     
     
 
@@ -27,16 +26,19 @@ public class UserDAO {
         
        
             Statement stmt = null;
-            
+            Connection conn =null;
+            ResultSet rs =null;
             String name = user.getName();
             String password = user.getPassword();
+            ConnectionManager connmgr = new ConnectionManager();
             
             String query = "Select email,lastname from users where firstname='"+name+"' AND password='"+password+"'";
              try {
             System.out.println("query:"+query);
-            conn = ConnectionManager.getConnection();
+            System.out.println("getting conn: UserDAO.login()");
+            conn = connmgr.getConnection();
             stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
+             rs = stmt.executeQuery(query);
             boolean more = rs.next();
             
             if(!more){
@@ -51,12 +53,16 @@ public class UserDAO {
                 user.setEmail(email);
                 user.setValid(true);
             }
+            rs.close();
+                stmt.close();
+                //connmgr.closeConnection(conn);
             } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
             
             finally
             {
+                System.out.println("finally : UserDAO.login()");
                     if (rs != null)	{
                     try {
                     rs.close();
@@ -73,7 +79,7 @@ public class UserDAO {
                     
                     if (conn != null) {
                     try {
-                    conn.close();
+                    connmgr.closeConnection(conn);
                     } catch (Exception e) {
                     }
                     

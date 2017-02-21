@@ -104,7 +104,12 @@
                     <tr>
                         <td>Enter last name</td>
                         <td colspan="2"><input type="text" id="lastname" name="lastname" size="30"/></td>
+                    </tr>
+                    <tr>
+                        <td>Enter birthday </td>
+                        <td colspan="2"><input type="date" id="bdate" name="bdate" size="30"/></td>
                     </tr> 
+                    <tr> 
                     <tr>  
                         <td></td>
                         <td><button type="submit" name="submit" value="submit">Submit</button></td>

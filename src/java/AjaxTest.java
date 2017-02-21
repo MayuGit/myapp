@@ -38,7 +38,7 @@ public class AjaxTest extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             //System.out.println("I am in ajaxtest servlet");
-            Connection conn = ConnectionManager.getConnection();
+            Connection conn = new ConnectionManager().getConnection();
             Statement stmt = null;
             ResultSet rs = null;
             try {
@@ -50,6 +50,9 @@ public class AjaxTest extends HttpServlet {
                 while (rs.next()) {
                     out.print(rs.getString("firstname") + ",");
                 }
+                rs.close();
+                stmt.close();
+                conn.close();
                 //ResultSet rs = 
             } catch (Exception e) {
                 System.out.println(e);

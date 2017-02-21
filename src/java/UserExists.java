@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.servlet.ServletException;
+import javax.servlet.ServletException; 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +39,10 @@ public class UserExists extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             System.out.println("I am in ajaxtest servlet");
-            Connection conn = ConnectionManager.getConnection();
+            ConnectionManager connmgr = new ConnectionManager();
+            System.out.println("getting conn: UserExists.processRequest()");
+            Connection conn = connmgr.getConnection();
+            
             Statement stmt = null;
             ResultSet rs = null;
             try {
@@ -52,10 +55,15 @@ public class UserExists extends HttpServlet {
                     System.out.println("user id exists!");
                     out.print("true");
                 }
+                rs.close();
+                stmt.close();
+                //connmgr.closeConnection(conn);
                 //ResultSet rs = 
             } catch (Exception e) {
                 System.out.println(e);
-            } finally {
+            } 
+            finally {
+                System.out.println("finally : UserExists()");
                 if (rs != null) {
                     try {
                         rs.close();
@@ -74,7 +82,7 @@ public class UserExists extends HttpServlet {
 
                 if (conn != null) {
                     try {
-                        conn.close();
+                        connmgr.closeConnection(conn);
                     } catch (Exception e) {
                     }
 

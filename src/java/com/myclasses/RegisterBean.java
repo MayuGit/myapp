@@ -5,6 +5,9 @@
  */
 package com.myclasses;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 /**
  *
  * @author ubuntu
@@ -15,6 +18,15 @@ public class RegisterBean {
     private String lastname;
     private String email;
     private String password;
+    private LocalDate bdate;
+
+    public LocalDate getBdate() {
+        return bdate;
+    }
+
+    public void setBdate(LocalDate bdate) {
+        this.bdate = bdate;
+    }
     private boolean valid;
 
     public boolean isValid() {
